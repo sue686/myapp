@@ -1,0 +1,50 @@
+name: Docker CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main  # 当推送到 main 分支时触发
+
+jobs:
+  build_and_push:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 检出代码
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # 设置 Docker 环境
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      # 登录 Docker Hub
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      # 构建并推送 Docker 镜像
+      - name: Build and Push Docker image
+        run: |
+          docker build -t selwyn11/myapp:latest .
+          docker push selwyn11/myapp:latest
+
+#   deploy:
+#     runs-on: ubuntu-latest
+#     needs: build_and_push  # 在 build_and_push 完成后执行
+
+#     steps:
+#       # 使用 SSH 连接到服务器并部署应用
+#       - name: Deploy to Server
+#         uses: appleboy/ssh-action@v0.1.5
+#         with:
+#           host: ${{ secrets.SERVER_HOST }}
+#           username: ${{ secrets.SERVER_USER }}
+#           key: ${{ secrets.SERVER_SSH_KEY }}
+#           script: |
+#             docker pull selwyn11/myapp:latest
+#             docker stop myapp-container || true
+#             docker rm myapp-container || true
+#             docker run -d --name myapp-container -p 5002:5002 selwyn11/myapp:latest
