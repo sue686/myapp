@@ -49,3 +49,4 @@ jobs:
             docker stop myapp-container || true
             docker rm myapp-container || true
             docker run -d --name myapp-container -p 5002:5002 selwyn11/myapp:latest
+          debug: true
