@@ -43,6 +43,7 @@ jobs:
           host: ${{ secrets.SERVER_HOST }}
           username: dcadmin
           key: ${{ secrets.SERVER_SSH_KEY }}
+          port: 22
           script: |
             docker pull selwyn11/myapp:latest
             docker stop myapp-container || true
