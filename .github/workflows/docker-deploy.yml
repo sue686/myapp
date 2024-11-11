@@ -12,7 +12,7 @@ jobs:
     steps:
       # 检出代码
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       # 设置 SSH Key 文件
       - name: Set up SSH key
