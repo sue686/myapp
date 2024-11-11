@@ -1,0 +1,120 @@
+{% extends "home/wegbase.html"%}
+
+{% load static %}
+
+{% block script %}
+
+{% endblock script %}
+
+
+{% block content %}
+
+<div class="form-inline">
+
+    <img src="{% static 'home/img/document.png' %}" alt="" style="margin-top: 16px;">
+
+  <h5 style="margin-top: 25px;margin-left: 8px;font-size: 18px;">Wellington IT System Links</h5>
+</div>
+
+<div class="border border-custom" style = "margin-top:20px">
+  <ul class="list-group">
+
+    <li class="list-group-item list-group-item-light" style="font-size: 14px;">
+      <div >
+      <a href="https://192.168.1.5:8443/manage/account/login?redirect=%2Fmanage" class="usefullink" target="_blank"  >Unifi Controller </a>
+
+      </div>
+    </li>
+    <li class="list-group-item list-group-item-light" style="font-size: 14px;">
+      <div >
+      <a href="https://10.0.0.250:8006/#v1:0:18:4::::::" class="usefullink" target="_blank"  >Proxmox 10.0.0.250</a>
+
+      </div>
+    </li>
+    <li class="list-group-item list-group-item-light" style="font-size: 14px;">
+      <div >
+      <a href="https://10.0.0.251:8006/#v1:0:18:4::::::" target="_blank" class="usefullink" >Proxmox 10.0.0.251</a>
+
+      </div>
+    </li>
+    
+    <li class="list-group-item list-group-item-light" style="font-size: 14px;">
+      <div >
+      <a href="https://10.0.0.9:8007" target="_blank" class="usefullink" >Proxmox Backup Server</a>
+
+      </div>
+    </li>
+    <li class="list-group-item list-group-item-light" style="font-size: 14px;">
+      <div >
+      <a href="http://10.0.0.8:8111" target="_blank" class="usefullink" >Teamcity</a>
+
+      </div>
+    </li>
+    <li class="list-group-item list-group-item-light" style="font-size: 14px;">
+      <div >
+      <a href="http://10.0.0.10:5000" target="_blank" class="usefullink" >NAS</a>
+
+      </div>
+    </li>
+
+    <li class="list-group-item list-group-item-light" style="font-size: 14px;">
+      <div >
+      <a href="https://192.168.3.8:7443/login" target="_blank" class="usefullink" >YBI CCTV</a>
+
+      </div>
+    </li>
+    <li class="list-group-item list-group-item-light" style="font-size: 14px;">
+      <div >
+      <a href="http://10.0.0.2:9191" target="_blank" class="usefullink" >Papercut</a>
+
+      </div>
+    </li>
+    <li class="list-group-item list-group-item-light" style="font-size: 14px;">
+      <div >
+      <a href="http://192.168.2.20:736" target="_blank" class="usefullink" >Phone System</a>
+
+      </div>
+    </li>
+    <li class="list-group-item list-group-item-light" style="font-size: 14px;">
+      <div >
+      <a href="http://10.0.0.11:9001/" class="usefullink" target="_blank"  >BBI Local Elearning </a>
+
+      </div>
+    </li>
+    <li class="list-group-item list-group-item-light" style="font-size: 14px;">
+      <div >
+      <a href="http://10.0.0.11:9000/" class="usefullink" target="_blank"  >YBI Local Elearning</a>
+
+      </div>
+    </li>
+  </ul>
+</div>
+
+<div class="form-inline">
+
+    <img src="{% static 'home/img/document.png' %}" alt="" style="margin-top: 16px;">
+
+  <h5 style="margin-top: 25px;margin-left: 8px;font-size: 18px;">Glebe IT System Links</h5>
+</div>
+
+<div class="border border-custom" style = "margin-top:20px">
+  <ul class="list-group">
+
+    <li class="list-group-item list-group-item-light" style="font-size: 14px;">
+      <div >
+      <a href="http://192.168.100.1" class="usefullink" target="_blank"  >Unifi Controller </a>
+
+      </div>
+    </li>
+    <li class="list-group-item list-group-item-light" style="font-size: 14px;">
+      <div >
+      <a href="http://10.5.0.250:8006" class="usefullink" target="_blank"  >Glebe Proxmox 10.5.0.250</a>
+
+      </div>
+    </li>
+
+
+  </ul>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,187 @@
+
+{% extends base_template %}
+
+
+{% load widget_tweaks %}
+{% load tags_extras %}
+{% load crispy_forms_tags %}
+
+{% load render_table from django_tables2 %}
+
+{% block script %}
+<script >
+  $(document).ready(function(){
+
+
+    $("#editbtn").click(function(){
+
+      var checkboxValues = [];
+      $('input[name="checkbox"]:checked').each(function(index, elem) {
+          checkboxValues.push($(elem).val());
+      });
+      //alert(checkboxValues.join(', '));
+      $("#selectedcheckbox").val(checkboxValues);
+
+      if ($.trim(checkboxValues).length==0)
+      {
+        alert("please select Permissions!");
+        return false;
+      }
+
+
+    });
+
+
+
+  });
+
+</script>
+
+<script >
+  $(document).ready(function(){
+
+
+  $("#all").click(function(){
+
+
+    if (this.checked)
+    {
+      $("input[name='checkbox']").each(function(i,n){
+                   n.checked = true;
+             });
+    }
+    else {
+      $("input[name='checkbox']").each(function(i,n){
+                   n.checked = false;
+             });
+    }
+
+ 	});
+
+  });
+</script>
+<script >
+$(document).ready(function(){
+    var permissions=$("#selectedcheckbox").val().split(",")
+
+    for ( x in permissions)
+    {
+
+      var permissionval="checkbox"+ permissions[x];
+
+      $("#"+permissionval).prop('checked',true);
+
+    }
+
+});
+</script>
+{% endblock %}
+{% block content %}
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'homeredirect' %}">Home</a></li>
+    {% if urlhome == "bbihome" or urlhome == "ybihome"%}
+    <li class="breadcrumb-item"><a href="{% url urlhome %}">{{ campus|upper }} </a></li>
+    {% endif %}
+    <li class="breadcrumb-item active" aria-current="page">{{ department|lower|capfirst }}</li>
+    <li class="breadcrumb-item active" aria-current="page">Edit Document Category</li>
+  </ol>
+</nav>
+
+<div class="well">
+  <form method="POST" enctype = "multipart/form-data">
+    {% csrf_token %}
+    <filedset class="form-group">
+      <div class="form-row col-md-12">
+        <div class="form-group col-md-12 ">
+          <!-- {{ form.categoryname }} -->
+          <input type="text" id="categoryname" name="categoryname" value="{{ categoryname }}">
+        </div>
+        <div>
+          <label >Permissions:</label>
+          <table>
+            <tr>
+              <td>
+            <input type="checkbox" id="all" value="all">Select All</input>
+            </td>
+            </tr>
+            <tr>
+              <td>
+          <input type="checkbox" name="checkbox" id="checkbox32" value="32"> YBI Compliance</input>
+          </td>
+              <td>
+          <input type="checkbox" name="checkbox" id="checkbox29" value="29"> YBI Academic</input>
+          </td>
+            <td>
+          <input type="checkbox" name="checkbox" id="checkbox13" value="13" > YBI Admin</input>
+        </td>
+          <td>
+          <input type="checkbox" name="checkbox" id="checkbox15" value="15"> YBI Marketing</input>
+        </td>
+          <td>
+          <input type="checkbox" name="checkbox" id="checkbox17" value="17"> YBI Finance</input>
+        </td>
+          <td>
+          <input type="checkbox" name="checkbox" id="checkbox19" value="19"> YBI IT</input>
+        </td>
+          <td>
+          <input type="checkbox" name="checkbox" id="checkbox18" value="18"> YBI HR</input>
+        </td>
+
+          </tr>
+          <tr>
+            <td>
+          <input type="checkbox" name="checkbox" id="checkbox31" value="31"> BBI Compliance</input>
+          </td>
+            <td>
+          <input type="checkbox" name="checkbox" id="checkbox30" value="30"> BBI Academic</input>
+          </td>
+            <td>
+          <input type="checkbox" name="checkbox" id="checkbox22" value="22"> BBI Admin</input>
+        </td>
+          <td>
+          <input type="checkbox" name="checkbox" id="checkbox24" value="24"> BBI Marketing</input>
+        </td>
+          <td>
+          <input type="checkbox" name="checkbox" id="checkbox26" value="26"> BBI Finance</input>
+        </td>
+          <td>
+          <input type="checkbox" name="checkbox" id="checkbox28" value="28"> BBI IT</input>
+        </td>
+          <td>
+          <input type="checkbox" name="checkbox" id="checkbox27" value="27"> BBI HR</input>
+        </td>
+          <td>
+          </tr>
+          <tr>
+
+            <td>
+          <input type="checkbox" name="checkbox" id="checkbox1" value="1"> WEG Management</input>
+        </td>
+
+          </tr>
+        </table>
+        <input type="text" name="selectedcheckbox" id="selectedcheckbox" value={{ selectedcheckboxvalue }} style="display: none"/>
+          <button class="btn btn-outline-info" type="submit" id="editbtn" name="editbtn">Update</button>
+        </div>
+      </div>
+      {% if form.errors %}
+          {% for field in form %}
+              {% for error in field.errors %}
+                  <div class="alert alert-danger">
+                      <strong>{{ error|escape }}</strong>
+                  </div>
+              {% endfor %}
+          {% endfor %}
+          {% for error in form.non_field_errors %}
+              <div class="alert alert-danger">
+                  <strong>{{ error|escape }}</strong>
+              </div>
+          {% endfor %}
+      {% endif %}
+
+  </form>
+</div>
+
+
+{% endblock content %}

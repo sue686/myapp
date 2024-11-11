@@ -1,0 +1,123 @@
+{% extends base_template %}
+{% load static %}
+{% load widget_tweaks %}
+{% load tags_extras %}
+{% load crispy_forms_tags %}
+
+{% load render_table from django_tables2 %}
+{% block content %}
+<div class="form-inline">
+
+    <img src="{% static 'home/img/document.png' %}" alt="" style="margin-top: 16px;">
+
+  <h5 style="margin-top: 25px;margin-left: 8px;">Documents</h5>
+</div>
+
+<div class="border border-custom small">
+<div class="well col-md-12" style="margin-top: 10px;">
+  <form method="POST" enctype = "multipart/form-data">
+    {% csrf_token %}
+
+      <div class="form-row ">
+        <div class="form-group form-inline">
+          <label >Category:</label>
+          {{ form.categoryname }}
+          <a  href="{% url 'doccategoryadd' campus=campus department=department %}">Add</a>
+        </div>
+
+      </div>
+      <div class="form-row form-inline">
+        <label >Select File...</label>
+          {{ form.file }}
+          <!-- {{ form|crispy }} -->
+      </div>
+
+        <span class="input-group-btn" >
+        <button class="btn btn-info small" type="submit" style="margin-top: 10px;margin-bottom:10px">Upload</button>
+        </span>
+
+      {% if form.errors %}
+          {% for field in form %}
+              {% for error in field.errors %}
+                  <div class="alert alert-danger">
+                      <strong>{{ error|escape }}</strong>
+                  </div>
+              {% endfor %}
+          {% endfor %}
+          {% for error in form.non_field_errors %}
+              <div class="alert alert-danger">
+                  <strong>{{ error|escape }}</strong>
+              </div>
+          {% endfor %}
+      {% endif %}
+
+  </form>
+</div>
+</div>
+<div class="border border-custom small" style="margin-top: 20px">
+<div align = "Right" style="margin-top: 10px;margin-right: 20px">
+<h6>Number of records: {{ filter | length }}</h6>
+</div>
+
+
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Category</th>
+            <th>Filename</th>
+            <th>Uploadtime</th>
+            <th>Operation</th>
+
+        </tr>
+    </thead>
+    <tbody>
+      {% for useritem in current_page %}
+        <tr>
+            <td>
+                {{ useritem.category }}
+            </td>
+            <td>
+                {{ useritem.filename }}
+            </td>
+            <td>
+                {{ useritem.uploadtime }}
+            </td>
+
+             <td>
+               <a href="{% url 'docdownload' id=useritem.id %}">Download |
+                </a>
+
+                 <a class="confirm-delete" href="{% url 'docdelete' id=useritem.id pagenumber=current_page.number campus=useritem.campus department=useritem.department  %} ">
+                   Delete
+                  </a>
+
+            </td>
+
+        {% endfor %}
+        </tr>
+    </tbody>
+</table>
+
+{% if is_paginated %}
+         <nav>
+            <ul class="pagination">
+                {% if current_page.has_previous %}
+                    <li class="page-item"><a class="page-link" href="?page={{ current_page.previous_page_number }}">Previous</a></li>
+                {% endif %}
+                {% for l in  Items.paginator.page_range %}
+                    {% if l <= Items.number|add:5 and l >= Items.number|add:-5 %}
+                        <li class="page-item {% if  l == current_page.number %}active{% endif %}">
+                          <a class="page-link" href="?page={{forloop.counter}}">{{forloop.counter}}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+
+                {% if current_page.has_next %}
+                    <li class="page-item"><a class="page-link" href="?page={{ current_page.next_page_number }}">Next</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+        {% endif %}
+</div>
+{% endblock content %}

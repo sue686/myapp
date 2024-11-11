@@ -1,0 +1,31 @@
+{% extends 'home/ybibase.html' %}
+
+
+
+
+{% block content %}
+<div class="row">
+  <div class="col-md-4">
+    <div class="content-section">
+      <h4>Sync</h4>
+      <p class='text-muted'>please be careful click these links before you know what you would like to do
+        <ul class="list-group">
+          <li class="list-group-item list-group-item-light"><a href="{% url 'YbiSaveuser' %}">Sync user</a></li>
+          <li class="list-group-item list-group-item-light"><a href="{% url 'YbiSavecourses' %}">Sync Course</a></li>
+          <li class="list-group-item list-group-item-light"><a href="{% url 'YbiSaveenrolleduser' %}">Sync Enrolleduser</a></li>
+          <li class="list-group-item list-group-item-light"><a href="{% url 'ybiSaveBBBrecord' %}">Sync BBB Recordings</a></li>
+        </ul>
+      </p>
+    </div>
+  </div>
+  <div class="col-md-8">
+  <h4 >Sync results:</h4>
+    <!-- <button class="btn btn-primary" type="button" disabled>
+    <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+    Syncing...
+  </button> -->
+  <h5 style="color:red;">{{ completed }}</h5>
+  </div>
+</div>
+
+{% endblock content %}

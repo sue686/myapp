@@ -1,0 +1,47 @@
+{% extends base_template %}
+{% load widget_tweaks %}
+{% block content %}
+
+
+<div class="well">
+    <form action=""  class="form-inline" role="search" method="get">
+        <div class="form-row col-md-12">
+          {% with form=filter.form %}
+            {% for field in form.visible_fields %}
+            <div class="form-group col-md-4">
+              {{ field.label_tag }}
+                  {% render_field field class="form-control" %}
+            </div>
+            {% endfor %}
+
+           <span class="input-group-btn">
+                <button class="btn btn-info form-control" type="submit" value="submit">Search</button>
+
+            </span>
+        </div>
+    {% endwith %}
+    </form>
+</div>
+<div align = "Left">
+  <a href="{% url 'articleadd'  campus="bbi" department="hr" %}">Add Article</a>
+
+</div>
+<div align = "Right">
+
+  <h6>Number of Articles: {{ posts | length }}</h6>
+</div>
+    {% for post in posts %}
+    <article class="media content-section">
+
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2" href="#">{{ post.department }}</a>
+              <a class="mr-2" href="#">{{ post.postuser }}</a>
+              <small class="text-muted">{{ post.postdate|date:"F d, Y" }}</small>
+            </div>
+            <h2><a class="article-title">{{ post.title }}</a></h2>
+            <p class="article-content">{{ post.content|safe }}</p>
+          </div>
+        </article>
+    {% endfor %}
+{% endblock content %}

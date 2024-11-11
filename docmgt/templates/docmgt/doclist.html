@@ -1,0 +1,106 @@
+
+{% extends base_template %}
+{% load static %}
+
+{% load widget_tweaks %}
+{% load tags_extras %}
+{% load crispy_forms_tags %}
+
+{% load render_table from django_tables2 %}
+{% block content %}
+
+<div class="form-inline">
+
+    <img src="{% static 'home/img/document.png' %}" alt="" style="margin-top: 16px;">
+
+  <h5 style="margin-top: 25px;margin-left: 8px;">Documents</h5>
+</div>
+
+<div class="border border-custom small">
+
+    <div class="form-row col-md-4" align = "Right" style="margin-top: 20px;margin-bottom: 20px;">
+      <div class="well" >
+          <form action=""  class="form-inline" role="search" method="get" >
+              <div class="form-row " >
+
+                  <div class="form-group">
+                  {{ filter.form.category.label_tag }}
+                  {% render_field filter.form.category class="custom-select" %}
+                  {{ filter.form.filename.label_tag }}
+                  {% render_field filter.form.filename class="form-control" %}
+                    <button class="btn btn-info form-control btn-sm " type="submit" value="submit">Search</button>
+                  </div>
+
+
+
+
+          </div>
+
+          </form>
+      </div>
+    </div>
+
+
+
+  <table class="table table-striped">
+      <thead>
+          <tr>
+              <th>Department</th>
+              <th>Category</th>
+
+              <th>Filename</th>
+
+              <th>Upload time</th>
+              <th>Download</th>
+
+          </tr>
+      </thead>
+      <tbody>
+        {% for item in current_page %}
+          <tr>
+            <td>
+                {{ item.department }}
+            </td>
+            <td>
+            {{ item.category }}
+            </td>
+              <td>
+              {{ item.filename }}
+              </td>
+
+              <td>
+                  {{ item.uploadtime }}
+              </td>
+              <td>
+                <a href="{% url 'docdownload' id=item.id %}">Download
+                 </a>
+
+
+             </td>
+          </tr>
+          {% endfor %}
+      </tbody>
+  </table>
+
+  {% if is_paginated %}
+           <nav>
+              <ul class="pagination">
+                  {% if current_page.has_previous %}
+                      <li class="page-item"><a class="page-link" href="?page={{ current_page.previous_page_number }}">Previous</a></li>
+                  {% endif %}
+                  {% for l in  Items.paginator.page_range %}
+                      {% if l <= Items.number|add:5 and l >= Items.number|add:-5 %}
+                          <li class="page-item {% if  l == current_page.number %}active{% endif %}">
+                            <a class="page-link" href="?page={{forloop.counter}}">{{forloop.counter}}</a>
+                          </li>
+                      {% endif %}
+                  {% endfor %}
+
+                  {% if current_page.has_next %}
+                      <li class="page-item"><a class="page-link" href="?page={{ current_page.next_page_number }}">Next</a></li>
+                  {% endif %}
+              </ul>
+          </nav>
+   {% endif %}
+
+{% endblock content %}

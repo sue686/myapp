@@ -1,0 +1,105 @@
+{% extends base_template %}
+{% load widget_tweaks %}
+{% load static %}
+{% block content %}
+
+<div class="form-inline">
+
+    <img src="{% static 'home/img/notice.png' %}" alt="" style="margin-top: 16px;">
+
+  <h5 style="margin-top: 25px;margin-left: 8px;">Notice Board</h5>
+</div>
+
+
+<div class="border border-custom" >
+<div class="form-row col-md-12" style="margin-top: 20px;" >
+  <div class="form-row col-md-8">
+      <div align = "Left">
+        <a href="{% url 'articleadd'  campus=campus department=department %}" class="btn btn-info" role="button">Add New Notice</a>
+      </div>
+  </div>
+  <div class="form-row col-md-4" align = "Right">
+    <div class="well" >
+        <form action=""  class="form-inline" role="search" method="get" >
+            <div class="form-row " >
+              {% with form=filter.form %}
+                {% for field in form.visible_fields %}
+                <div class="form-group">
+                  {{ field.label_tag }}
+                      {% render_field field class="form-control" %}
+                </div>
+                {% endfor %}
+
+               <span class="input-group-btn">
+                    <button class="btn btn-info form-control" type="submit" value="submit">Search</button>
+
+                </span>
+            </div>
+        {% endwith %}
+        </form>
+    </div>
+  </div>
+
+</div>
+<div align = "Right" style="margin-top: 10px;margin-right: 20px">
+
+  <h6>Number of Articles: {{ filter.qs | length }}</h6>
+</div>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Updated Date</th>
+            <th>Top</th>
+
+            <th>Operation</th>
+
+        </tr>
+    </thead>
+    <tbody>
+      {% for item in current_page %}
+        <tr>
+            <td>
+               <a href="{% url 'articledetail' id=item.id campus=item.campus department=item.department %}"> {{ item.title }}</a>
+            </td>
+            <td>
+                {{ item.updatedate }}
+            </td>
+            <td>
+                {{ item.top }}
+            </td>
+            {% if not item.top   %}
+            <td>
+            <a href="{% url 'articleedit' id=item.id campus=item.campus department=item.department %}">Edit | </a>
+
+             <a class="confirm-delete" href="{% url 'articledelete' id=item.id campus=item.campus department=item.department pagenumber=current_page.number %}">Delete</a>
+               </td>
+              
+               {% endif %}
+
+        {% endfor %}
+        </tr>
+    </tbody>
+</table>
+
+{% if is_paginated %}
+         <nav>
+            <ul class="pagination">
+                {% if current_page.has_previous %}
+                    <li class="page-item"><a class="page-link" href="?page={{ current_page.previous_page_number }}">Previous</a></li>
+                {% endif %}
+                {% for l in  Items.paginator.page_range %}
+                    {% if l <= Items.number|add:5 and l >= Items.number|add:-5 %}
+                        <li class="page-item {% if  l == current_page.number %}active{% endif %}">
+                          <a class="page-link" href="?page={{forloop.counter}}">{{forloop.counter}}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+
+                {% if current_page.has_next %}
+                    <li class="page-item"><a class="page-link" href="?page={{ current_page.next_page_number }}">Next</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+        {% endif %}
+{% endblock content %}

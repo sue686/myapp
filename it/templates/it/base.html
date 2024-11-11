@@ -1,0 +1,117 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Bootstrap 4 -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
+  <!-- Font Awesome -->
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+  <!-- Moment.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.23.0/moment.min.js" integrity="sha256-VBLiveTKyUZMEzJd6z2mhfxIqz3ZATCuVMawPZGzIfA=" crossorigin="anonymous"></script>
+
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  {% block script %}
+
+  {% endblock %}
+  <link rel="stylesheet" type="text/css" href="{% static 'home/home.css' %}">
+
+
+  {% if title %}
+  <title>APP Home{{ title }}</title>
+  {% else %}
+  <title>APP Home</title>
+  {% endif %}
+</head>
+
+<body class="wrapper" >
+  <header class="site-header">
+    <nav class="navbar navbar-expand-md navbar-dark navbar-custom fixed-top">
+      <div class="container">
+        <a class="navbar-brand mr-4" href="{% url 'home' %}">IT APP</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarToggle">
+          <div class="navbar-nav mr-auto">
+            <a class="nav-item nav-link" href="{% url 'home' %}">Home</a>
+              <a class="nav-item nav-link" href="{% url 'birthday_add' %}">Birthdayadd</a>
+
+              <a class="nav-item nav-link" href="{% url 'birthday_sendemail' %}">Birthdaysend</a>
+            {% if user.is_authenticated %}
+
+
+            {% endif %}
+          </div>
+
+
+          <!-- Navbar Right Side -->
+          <div class="navbar-nav">
+            {% if user.is_authenticated %}
+
+
+              <ul class="nav navbar-nav">
+
+                <li class="dropdown">
+                  <a class="dropdown-toggle nav-item nav-link" data-toggle="dropdown" href="#">{{ user.get_username }}
+                  <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="{% url 'logout' %}">logout</a></li>
+
+                  </ul>
+                </li>
+
+              </ul>
+
+            {% else %}
+
+              <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
+
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main role="main" class="container" >
+    <div class="row">
+
+      <div class="col-md-12">
+        {% block content %}
+
+        {% endblock %}
+
+      </div>
+
+    </div>
+
+
+  </main>
+
+
+  <!-- Footer -->
+  <footer  id = "footer" class="page-footer font-small fixed-bottom">
+
+    <!-- Copyright -->
+    <div class="footer-copyright text-center py-1">
+   <p>© 2020 Copyright: York Business Institute     Email : it@york.edu.au</p>
+
+    </div>
+    <!-- Copyright -->
+
+  </footer>
+<!-- Footer -->
+
+
+</html>

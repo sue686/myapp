@@ -1,0 +1,77 @@
+{% extends "it/base.html"%}
+
+
+
+{% block script %}
+
+<script language="JavaScript" type="text/javascript" >
+function   sta(){
+//window.location='http://www.environment.osen-cloud.net/login';
+function PostSubmit() {
+  var postUrl =  'http://10.0.0.2:9191/app';//提交地址
+    var postData = 'admin';//第一个数据，xxxxxx里面就是你需要填写的数据
+    var msgData ='master*2017';//第二个数据同上
+    var ExportForm = document.createElement("FORM");
+    document.body.appendChild(ExportForm);
+    ExportForm.method = "POST";
+    var newElement = document.createElement("input");
+    newElement.setAttribute("name", "inputUsername");
+    newElement.setAttribute("type", "hidden");
+
+    var newElement2 = document.createElement("input");
+    newElement2.setAttribute("name", "inputPassword");
+    newElement2.setAttribute("type", "hidden");
+
+
+    var newElement3 = document.createElement("input");
+    newElement3.setAttribute("name", "service");
+    newElement3.setAttribute("type", "hidden");
+
+    var newElement4 = document.createElement("input");
+    newElement4.setAttribute("name", "sp");
+    newElement4.setAttribute("type", "hidden");
+    ExportForm.appendChild(newElement);
+    ExportForm.appendChild(newElement2);
+    ExportForm.appendChild(newElement3);
+    ExportForm.appendChild(newElement4);
+
+    newElement.value = postData;
+    newElement2.value = msgData;
+    newElement3.value = 'direct/1/Home/$Form$0';
+    newElement4.value = 'S0';
+
+    ExportForm.action = postUrl;
+    ExportForm.submit();
+};
+setTimeout( PostSubmit,0);
+}
+</script>
+{% endblock script %}
+
+
+{% block content %}
+
+
+
+<a class="nav-item nav-link" href="{% url 'ybihome' %}">YBI APP</a>
+<a class="nav-item nav-link" href="{% url 'bbihome' %}">BBI APP</a>
+
+
+<form name="form1" method="post" action=""><!--这里用js实现跳转-->
+    <table cellpadding="0" cellspacing="0" border="0">
+        <tr>
+            <td height="50" colspan="2" bgcolor="#eeeeee" align="center">用户登录</td>
+        </tr>
+
+        <tr>
+            <td colspan="2" align="center">
+
+                <input name="button" type="button" value="登录" onclick="sta()"">
+           </td>
+        </tr>
+    </table>
+</form>
+
+
+
+{% endblock content %}

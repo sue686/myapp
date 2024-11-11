@@ -1,0 +1,17 @@
+{% extends "home/wegbase.html"%}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="content-section">
+  <form method="POST">
+    {% csrf_token %}
+    <filedset class="form-group">
+      <legend class="border-bottom mb-4">Log In</legend>
+      {{ form|crispy }}
+    </filedset>
+    <div>
+      <button class="btn btn-outline-info" type="submit">Log In</button>
+    </div>
+
+  </form>
+</div>
+{% endblock content %}

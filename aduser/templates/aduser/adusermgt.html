@@ -1,0 +1,98 @@
+{% extends "home/wegbase.html"%}
+{% load widget_tweaks %}
+
+{% block script %}
+
+<script >
+$(function(){
+    $('#id_week').change(function(){
+        $('#search').click();
+    });
+});
+</script>
+{% endblock %}
+
+{% block content %}
+
+
+<div class="form-row col-md-12" >
+
+  <div class="form-row col-md-8" align = "Right">
+    <div class="well" >
+        <form action=""  class="form-inline" role="search" method="get" >
+            <div class="form-row " >
+              {% with form=filter.form %}
+                {% for field in form.visible_fields %}
+                <div class="form-group" style="padding-right: 15px">
+                  {{ field.label_tag }}
+                      {% render_field field class="form-control" %}
+                </div>
+                {% endfor %}
+
+               <span class="input-group-btn">
+                    <button class="btn btn-info form-control" id ="search" name = "search" type="submit" value="submit" >Search</button>
+
+                </span>
+            </div>
+        {% endwith %}
+        </form>
+    </div>
+  </div>
+
+</div>
+<table class="table table-striped" style="margin-top: 20px;">
+    <thead>
+        <tr>
+            <th>Student ID</th>
+            <th>GivenName</th>
+            <th>SurName</th>
+            <th>Computer</th>
+            <th>Elearning</th>
+
+        </tr>
+    </thead>
+    <tbody>
+      {% for item in current_page %}
+        <tr>
+            <td>
+              {{ item.name }}
+            </td>
+            <td>
+                {{ item.givenname }}
+            </td>
+            <td>
+                {{ item.surname }}
+            </td>
+            <td>
+              <a href="{% url 'changecomputerpwview' samaccountname=item.samaccountname password=item.password %}">Reset Computer Login Password</a>
+               </td>
+            <td>
+            <a href="{% url 'change_moodle_user_password' campus=item.campus samaccountname=item.samaccountname password=item.password %}">Reset Elearning Login Password </a>
+                </td>
+
+        {% endfor %}
+        </tr>
+    </tbody>
+</table>
+
+{% if is_paginated %}
+         <nav>
+            <ul class="pagination">
+                {% if current_page.has_previous %}
+                    <li class="page-item"><a class="page-link" href="?page={{ current_page.previous_page_number }}">Previous</a></li>
+                {% endif %}
+                {% for l in  Items.paginator.page_range %}
+                    {% if l <= Items.number|add:5 and l >= Items.number|add:-5 %}
+                        <li class="page-item {% if  l == current_page.number %}active{% endif %}">
+                          <a class="page-link" href="?page={{forloop.counter}}">{{forloop.counter}}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+
+                {% if current_page.has_next %}
+                    <li class="page-item"><a class="page-link" href="?page={{ current_page.next_page_number }}">Next</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+        {% endif %}
+{% endblock content %}

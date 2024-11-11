@@ -1,0 +1,57 @@
+{% extends base_template %}
+{% load widget_tweaks %}
+{% load static %}
+{% block content %}
+
+<div class="form-inline">
+
+    <img src="{% static 'home/img/notice.png' %}" alt="" style="margin-top: 16px;">
+
+  <h5 style="margin-top: 25px;margin-left: 8px;">Notice Board</h5>
+</div>
+<div class="border border-custom" >
+
+    {% for post in posts %}
+    <span class="span-custom-post-detail" style="float: left; margin-left:20px;margin-top:20px">
+      <table style="width: 50px;">
+        <tr>
+          <td>
+      {{ post.postdate|date:"d"  }}
+      </td>
+      </tr>
+      <tr>
+        <td>
+        {{ post.postdate|date:"M"  }}
+        </td>
+        </tr>
+      </table>
+    </span>
+    <article class="media content-section" style="padding-left:20px;margin-top:20px">
+
+          <div class="media-body">
+            <div class="article-metadata">
+
+              {% if post.department == "hr" or post.department == "it"  %}
+              {{ post.department|upper }}
+              {% else %}
+              {{ post.department|capfirst }}
+              {% endif %}
+              {{ post.postuser|capfirst }}
+
+            </div>
+            <h4>{{ post.title }}</h4>
+            <p class="article-content" style="margin-top: 30px;">{{ post.content|safe }}</p>
+          </div>
+        </article>
+        {% if  post.top and perms.auth.weg_menu_management  %}
+        <td>
+        <a href="{% url 'articleedit' id=post.id campus=post.campus department=post.department %}">Edit | </a>
+
+         <a class="confirm-delete" href="{% url 'articledelete' id=post.id campus=post.campus department=post.department pagenumber=1 %}">Delete</a>
+           </td>
+
+           {% endif %}
+
+    {% endfor %}
+{% endblock content %}
+</div>

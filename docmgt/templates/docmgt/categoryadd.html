@@ -1,0 +1,245 @@
+
+{% extends base_template %}
+
+
+{% load widget_tweaks %}
+{% load tags_extras %}
+{% load crispy_forms_tags %}
+
+{% load render_table from django_tables2 %}
+{% block script %}
+<script >
+  $(document).ready(function(){
+
+
+    $("#addbtn").click(function(){
+
+      var checkboxValues = [];
+      $('input[name="checkbox"]:checked').each(function(index, elem) {
+          checkboxValues.push($(elem).val());
+      });
+      //alert(checkboxValues.join(', '));
+      $("#selectedcheckbox").val(checkboxValues);
+
+      if ($.trim(checkboxValues).length==0)
+      {
+        alert("please select Permissions!");
+        return false;
+      }
+
+
+    });
+
+
+
+  });
+
+</script>
+
+<script >
+  $(document).ready(function(){
+
+
+  $("#all").click(function(){
+
+
+    if (this.checked)
+    {
+      $("input[name='checkbox']").each(function(i,n){
+                   n.checked = true;
+             });
+    }
+    else {
+      $("input[name='checkbox']").each(function(i,n){
+                   n.checked = false;
+             });
+    }
+
+ 	});
+
+  });
+</script>
+
+{% endblock %}
+
+
+
+{% block content %}
+
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'homeredirect' %}">Home</a></li>
+    {% if urlhome == "bbihome" or urlhome == "BBIhome"%}
+    <li class="breadcrumb-item"><a href="{% url urlhome %}">{{ campus|upper }} </a></li>
+    {% endif %}
+    <li class="breadcrumb-item"><a href="{% url 'docupload' campus=campus department=department %}">{{ department|lower|capfirst }} Document MGT</a></li>
+
+    <li class="breadcrumb-item active" aria-current="page">Add Document Category</li>
+  </ol>
+</nav>
+
+<div class="well">
+  <form method="POST" enctype = "multipart/form-data">
+    {% csrf_token %}
+    <filedset class="form-group">
+      <div class="form-row col-md-12">
+        <div class="form-group col-md-12 ">
+            <label>Name:</label>
+          {{ form.categoryname }}
+          </div>
+          <div>
+          <label >Permissions:</label>
+          <table>
+            <tr>
+              <td>
+            <input type="checkbox" id="all" value="all">Select All</input>
+            </td>
+            </tr>
+            <tr>
+              <td>
+          <input type="checkbox" name="checkbox" id="checkbox" value="32"> YBI Compliance</input>
+          </td>
+              <td>
+          <input type="checkbox" name="checkbox" id="checkbox" value="29"> YBI Academic</input>
+          </td>
+            <td>
+          <input type="checkbox" name="checkbox" id="checkbox" value="13" > YBI Admin</input>
+        </td>
+          <td>
+          <input type="checkbox" name="checkbox" id="checkbox" value="15"> YBI Marketing</input>
+        </td>
+          <td>
+          <input type="checkbox" name="checkbox" id="checkbox" value="17"> YBI Finance</input>
+        </td>
+          <td>
+          <input type="checkbox" name="checkbox" id="checkbox" value="19"> YBI IT</input>
+        </td>
+          <td>
+          <input type="checkbox" name="checkbox" id="checkbox" value="18"> YBI HR</input>
+        </td>
+
+          </tr>
+          <tr>
+            <td>
+          <input type="checkbox" name="checkbox" id="checkbox" value="31"> BBI Compliance</input>
+          </td>
+
+            <td>
+          <input type="checkbox" name="checkbox" id="checkbox" value="30"> BBI Academic</input>
+          </td>
+            <td>
+          <input type="checkbox" name="checkbox" id="checkbox" value="22"> BBI Admin</input>
+        </td>
+          <td>
+          <input type="checkbox" name="checkbox" id="checkbox" value="24"> BBI Marketing</input>
+        </td>
+          <td>
+          <input type="checkbox" name="checkbox" id="checkbox" value="26"> BBI Finance</input>
+        </td>
+          <td>
+          <input type="checkbox" name="checkbox" id="checkbox" value="28"> BBI IT</input>
+        </td>
+          <td>
+          <input type="checkbox" name="checkbox" id="checkbox" value="27"> BBI HR</input>
+        </td>
+          <td>
+          </tr>
+          <tr>
+
+            <td>
+          <input type="checkbox" name="checkbox" id="checkbox" value="1"> WEG Management</input>
+        </td>
+
+          </tr>
+        </table>
+        <input type="text" name="selectedcheckbox" id="selectedcheckbox" style="display: none"/>
+          <button class="btn btn-outline-info" type="submit" id="addbtn" name="addbtn" >Add</button>
+        </div>
+      </div>
+      {% if form.errors %}
+          {% for field in form %}
+              {% for error in field.errors %}
+                  <div class="alert alert-danger">
+                      <strong>{{ error|escape }}</strong>
+                  </div>
+              {% endfor %}
+          {% endfor %}
+          {% for error in form.non_field_errors %}
+              <div class="alert alert-danger">
+                  <strong>{{ error|escape }}</strong>
+              </div>
+          {% endfor %}
+      {% endif %}
+
+  </form>
+</div>
+<div align = "Right">
+<h6>Number of records: {{ filter | length }}</h6>
+</div>
+
+</div>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+
+            <th>Category Name</th>
+            <th>Permissions</th>
+            <th>Update Date</th>
+            <th>Operation</th>
+
+        </tr>
+    </thead>
+    <tbody>
+      {% for useritem in current_page %}
+        <tr>
+
+            <td>
+                {{ useritem.categoryname }}
+            </td>
+            <td>
+                {{ useritem.permissionname|cut:"[" |cut:"]"}}
+            </td>
+            <td>
+                {{ useritem.lastupdatetime }}
+            </td>
+
+
+             <td>
+               <a href="{% url 'doccategoryedit' id=useritem.id pagenumber=current_page.number campus=useritem.campus department=useritem.department categoryname=useritem.categoryname permission=useritem.permission %}">
+                 Edit |
+                </a>
+
+                 <a class="confirm-delete" href="{% url 'doccategorydelete' id=useritem.id pagenumber=current_page.number campus=useritem.campus department=useritem.department%} ">
+                  Delete
+                  </a>
+
+            </td>
+
+        {% endfor %}
+        </tr>
+    </tbody>
+</table>
+
+{% if is_paginated %}
+         <nav>
+            <ul class="pagination">
+                {% if current_page.has_previous %}
+                    <li class="page-item"><a class="page-link" href="?page={{ current_page.previous_page_number }}">Previous</a></li>
+                {% endif %}
+                {% for l in  Items.paginator.page_range %}
+                    {% if l <= Items.number|add:5 and l >= Items.number|add:-5 %}
+                        <li class="page-item {% if  l == current_page.number %}active{% endif %}">
+                          <a class="page-link" href="?page={{forloop.counter}}">{{forloop.counter}}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+
+                {% if current_page.has_next %}
+                    <li class="page-item"><a class="page-link" href="?page={{ current_page.next_page_number }}">Next</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+        {% endif %}
+
+{% endblock content %}

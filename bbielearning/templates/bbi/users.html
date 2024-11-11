@@ -1,0 +1,82 @@
+{% extends "home/bbibase.html" %}
+{% load widget_tweaks %}
+{% load tags_extras %}
+
+{% block content %}
+
+  <div class="well">
+  <form action=""  class="form-inline" role="search" method="get">
+      <div class="form-row col-md-12">
+        {% with form=filter.form %}
+          {% for field in form.visible_fields %}
+          <div class="form-group col-md-4">
+            {{ field.label_tag }}
+                {% render_field field class="form-control" %}
+          </div>
+          {% endfor %}
+
+         <span class="input-group-btn">
+              <button class="btn btn-info form-control" type="submit" value="submit">Search</button>
+          </span>
+      </div>
+  {% endwith %}
+  </form>
+  </div>
+  <div align = "Right">
+  <h6>Number of records: {{ filter.qs | length }}</h6>
+  </div>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Userid</th>
+            <th>Username</th>
+            <th>fullname</th>
+            <th>suspended</th>
+            <th>operation</th>
+        </tr>
+    </thead>
+    <tbody>
+      {% for useritem in current_page %}
+        <tr>
+            <td>
+                {{ useritem.userid }}
+            </td>
+            <td>
+                {{ useritem.username }}
+            </td>
+            <td>
+                {{ useritem.fullname }}
+            </td>
+            <td>
+                {{ useritem.suspended }}
+            </td>
+          
+
+        {% endfor %}
+        </tr>
+    </tbody>
+</table>
+
+{% if is_paginated %}
+         <nav>
+            <ul class="pagination">
+                {% if current_page.has_previous %}
+                    <li class="page-item"><a class="page-link" href="?page={{ current_page.previous_page_number }}">Previous</a></li>
+                {% endif %}
+                {% for l in  Items.paginator.page_range %}
+                    {% if l <= Items.number|add:5 and l >= Items.number|add:-5 %}
+                        <li class="page-item {% if  l == current_page.number %}active{% endif %}">
+                          <a class="page-link" href="?page={{forloop.counter}}">{{forloop.counter}}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+
+                {% if current_page.has_next %}
+                    <li class="page-item"><a class="page-link" href="?page={{ current_page.next_page_number }}">Next</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+        {% endif %}
+
+{% endblock %}

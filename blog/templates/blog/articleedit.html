@@ -1,0 +1,33 @@
+{% extends base_template %}
+{% load widget_tweaks %}
+{% block content %}
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'homeredirect'  %}">Home</a></li>
+    {% if urlhome == "bbihome" or urlhome == "ybihome"%}
+    <li class="breadcrumb-item"><a href="{% url urlhome %}">{{ campus|upper }} </a></li>
+    {% endif %}
+    <li class="breadcrumb-item active" aria-current="page">{{ department|lower|capfirst }}</li>
+    <li class="breadcrumb-item"><a href="{% url 'articlemgt' campus=campus department=department pagenumber=1 %}">Notice Mgt</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Edit Notice</li>
+
+  </ol>
+</nav>
+<div class="well">
+  <form method="POST" enctype = "multipart/form-data">
+    {% csrf_token %}
+    <filedset class="form-group">
+      <div class="form-row col-md-12">
+        <div class="form-group">
+
+          {{ form.media }}
+          {{ form.as_p }}
+
+          <button class="btn btn-outline-info" type="submit">Update</button>
+        </div>
+      </div>
+
+
+  </form>
+</div>
+{% endblock content %}

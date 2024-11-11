@@ -1,0 +1,793 @@
+{% extends "home/wegbase.html"%}
+{% load widget_tweaks %}
+{% load static %}
+{% block script %}
+  <link rel="stylesheet" href="{% static 'home/calendar/vanilla-calendar.css' %}">
+  <script src="{% static 'home/calendar/vanilla-calendar-min.js' %}"></script>
+
+
+{% endblock %}
+
+{% block content %}
+
+<div class="row" >
+  <div class="col-md-4">
+    <div class="form-inline">
+
+        <img src="{% static 'home/img/document.png' %}" alt="" style="margin-top: 16px;">
+
+      <h5 style="margin-top: 25px;margin-left: 8px;font-size: 18px;">Documents</h5>
+    </div>
+  <div class="border border-custom" style="height: 400px">
+    <ul class="nav nav-tabs">
+        <li class="nav-item" >
+          <a class="nav-link nav-custom active" data-toggle="tab" href="#weg">WEG</a>
+        </li>
+        <li class="nav-item " >
+          <a class="nav-link nav-custom" data-toggle="tab" href="#ybi">YBI</a>
+        </li>
+        <li class="nav-item " >
+          <a class="nav-link nav-custom" data-toggle="tab" href="#bbi">BBI</a>
+        </li>
+      </ul>
+
+      <!-- Tab panes -->
+      <div class="tab-content">
+        <div id="weg" class="container tab-pane active small"><br>
+          <ul class="nav flex-column">
+             <li class="nav-item">
+             <span class="span-custom-weg" style="float: left;">HR</span>
+              <table style="margin-left: 8px; float: left;">
+                <tr>
+
+                  <td style="font-size: 14px">
+                    HR Forms
+
+                 </td>
+                 </tr>
+                <tr>
+                  <td style="font-size: 10px">
+                    HR
+                 </td>
+                  </tr>
+             </table>
+
+             <div style="float: right;padding-right: 8px;padding-top: 8px;">
+
+               <a href="{% url 'doclist' campus="weg" department="hr" pagenumber=1 %}" class="btn-wegcustomview" role="button" >View</a>
+             </div>
+             </li>
+
+             <li class="nav-item" style="margin-top: 15px;">
+             <span class="span-custom-weg" style="float: left;">FIN</span>
+              <table style="margin-left: 8px; float: left;">
+                <tr>
+
+                  <td style="font-size: 14px">
+                    Finance Forms
+
+                 </td>
+                 </tr>
+                <tr>
+                  <td style="font-size: 10px">
+                    Finance
+                 </td>
+                  </tr>
+             </table>
+             <div style="float: right;padding-right: 8px;padding-top: 8px;">
+               <a href="{% url 'doclist' campus="weg" department="finance" pagenumber=1 %}" class="btn-wegcustomview" role="button" >View</a>
+             </div>
+             </li>
+
+             <li class="nav-item" style="margin-top: 15px;">
+             <span class="span-custom-weg" style="float: left;">IT</span>
+              <table style="margin-left: 8px; float: left;">
+                <tr>
+
+                  <td style="font-size: 14px">
+                    IT Forms
+
+                 </td>
+                 </tr>
+                <tr>
+                  <td style="font-size: 10px">
+                    IT
+                 </td>
+                  </tr>
+             </table>
+             <div style="float: right;padding-right: 8px;padding-top: 8px;">
+               <a href="{% url 'doclist' campus="weg" department="it" pagenumber=1 %}" class="btn-wegcustomview" role="button" >View</a>
+             </div>
+             </li>
+
+
+           </ul>
+          </div>
+        <div id="ybi" class="container tab-pane fade small"><br>
+          <ul class="nav flex-column">
+            <li class="nav-item">
+            <span class="span-custom-ybi" style="float: left;">CMP</span>
+             <table style="margin-left: 8px; float: left;">
+               <tr>
+
+                 <td style="font-size: 14px">
+                   Compliance Forms
+
+                </td>
+                </tr>
+               <tr>
+                 <td style="font-size: 10px">
+                   Compliance
+                </td>
+                 </tr>
+            </table>
+            <div style="float: right;padding-right: 8px;padding-top: 8px;">
+              <a href="{% url 'doclist' campus="ybi" department="compliance" pagenumber=1 %}" class="btn-ybicustomview" role="button" >View</a>
+            </div>
+            </li>
+            <li class="nav-item" style="margin-top: 15px;">
+            <span class="span-custom-ybi" style="float: left;">ACD</span>
+             <table style="margin-left: 8px; float: left;">
+               <tr>
+
+                 <td style="font-size: 14px">
+                   Academic Forms
+
+                </td>
+                </tr>
+               <tr>
+                 <td style="font-size: 10px">
+                   Academic
+                </td>
+                 </tr>
+            </table>
+            <div style="float: right;padding-right: 8px;padding-top: 8px;">
+              <a href="{% url 'doclist' campus="ybi" department="academic" pagenumber=1 %}" class="btn-ybicustomview" role="button" >View</a>
+            </div>
+            </li>
+            <li class="nav-item" style="margin-top: 15px;">
+            <span class="span-custom-ybi" style="float: left;">ADM</span>
+             <table style="margin-left: 8px; float: left;">
+               <tr>
+
+                 <td style="font-size: 14px">
+                   Admin Forms
+
+                </td>
+                </tr>
+               <tr>
+                 <td style="font-size: 10px">
+                   Admin
+                </td>
+                 </tr>
+            </table>
+            <div style="float: right;padding-right: 8px;padding-top: 8px;">
+              <a href="{% url 'doclist' campus="ybi" department="admin" pagenumber=1 %}" class="btn-ybicustomview" role="button" >View</a>
+            </div>
+            </li>
+
+            <li class="nav-item" style="margin-top: 15px;">
+            <span class="span-custom-ybi" style="float: left;">MKT</span>
+             <table style="margin-left: 8px; float: left;">
+               <tr>
+
+                 <td style="font-size: 14px">
+                   Marketing Forms
+
+                </td>
+                </tr>
+               <tr>
+                 <td style="font-size: 10px">
+                   Market
+                </td>
+                 </tr>
+            </table>
+            <div style="float: right;padding-right: 8px;padding-top: 8px;">
+              <a href="{% url 'doclist' campus="ybi" department="marketing" pagenumber=1 %}" class="btn-ybicustomview" role="button" >View</a>
+            </div>
+            </li>
+            <li class="nav-item" style="margin-top: 15px;">
+            <span class="span-custom-ybi" style="float: left;">FIN</span>
+             <table style="margin-left: 8px; float: left;">
+               <tr>
+
+                 <td style="font-size: 14px">
+                   Finance Forms
+
+                </td>
+                </tr>
+               <tr>
+                 <td style="font-size: 10px">
+                   Finance
+                </td>
+                 </tr>
+            </table>
+            <div style="float: right;padding-right: 8px;padding-top: 8px;">
+              <a href="{% url 'doclist' campus="ybi" department="finance" pagenumber=1 %}" class="btn-ybicustomview" role="button" >View</a>
+            </div>
+            </li>
+            <li class="nav-item" style="margin-top: 15px;">
+            <span class="span-custom-ybi" style="float: left;">HR</span>
+             <table style="margin-left: 8px; float: left;">
+               <tr>
+
+                 <td style="font-size: 14px">
+                   HR Forms
+
+                </td>
+                </tr>
+               <tr>
+                 <td style="font-size: 10px">
+                   HR
+                </td>
+                 </tr>
+            </table>
+            <div style="float: right;padding-right: 8px;padding-top: 8px;">
+              <a href="{% url 'doclist' campus="ybi" department="hr" pagenumber=1 %}" class="btn-ybicustomview" role="button" >View</a>
+            </div>
+            </li>
+
+
+           </ul>
+        </div>
+        <div id="bbi" class="container tab-pane fade small"><br>
+          <ul class="nav flex-column">
+            <li class="nav-item">
+            <span class="span-custom-bbi" style="float: left;">CMP</span>
+             <table style="margin-left: 8px; float: left;">
+               <tr>
+
+                 <td style="font-size: 14px">
+                   Compliance Forms
+
+                </td>
+                </tr>
+               <tr>
+                 <td style="font-size: 10px">
+                   Compliance
+                </td>
+                 </tr>
+            </table>
+            <div style="float: right;padding-right: 8px;padding-top: 8px;">
+              <a href="{% url 'doclist' campus="bbi" department="compliance" pagenumber=1 %}" class="btn-bbicustomview" role="button" >View</a>
+            </div>
+            </li>
+            <li class="nav-item" style="margin-top: 15px;">
+            <span class="span-custom-bbi" style="float: left;">ACD</span>
+             <table style="margin-left: 8px; float: left;">
+               <tr>
+
+                 <td style="font-size: 14px">
+                   Academic Forms
+
+                </td>
+                </tr>
+               <tr>
+                 <td style="font-size: 10px">
+                   Academic
+                </td>
+                 </tr>
+            </table>
+            <div style="float: right;padding-right: 8px;padding-top: 8px;">
+              <a href="{% url 'doclist' campus="bbi" department="academic" pagenumber=1 %}" class="btn-bbicustomview" role="button" >View</a>
+            </div>
+            </li>
+            <li class="nav-item" style="margin-top: 15px;">
+            <span class="span-custom-bbi" style="float: left;">ADM</span>
+             <table style="margin-left: 8px; float: left;">
+               <tr>
+
+                 <td style="font-size: 14px">
+                   Admin Forms
+
+                </td>
+                </tr>
+               <tr>
+                 <td style="font-size: 10px">
+                   Admin
+                </td>
+                 </tr>
+            </table>
+            <div style="float: right;padding-right: 8px;padding-top: 8px;">
+              <a href="{% url 'doclist' campus="bbi" department="admin" pagenumber=1 %}" class="btn-bbicustomview" role="button" >View</a>
+            </div>
+            </li>
+            <li class="nav-item" style="margin-top: 15px;">
+            <span class="span-custom-bbi" style="float: left;">MKT</span>
+             <table style="margin-left: 8px; float: left;">
+               <tr>
+
+                 <td style="font-size: 14px">
+                   Marketing Forms
+
+                </td>
+                </tr>
+               <tr>
+                 <td style="font-size: 10px">
+                   Market
+                </td>
+                 </tr>
+            </table>
+            <div style="float: right;padding-right: 8px;padding-top: 8px;">
+              <a href="{% url 'doclist' campus="bbi" department="marketing" pagenumber=1 %}" class="btn-bbicustomview" role="button" >View</a>
+            </div>
+            </li>
+            <li class="nav-item" style="margin-top: 15px;">
+            <span class="span-custom-bbi" style="float: left;">FIN</span>
+             <table style="margin-left: 8px; float: left;">
+               <tr>
+
+                 <td style="font-size: 14px">
+                   Finance Forms
+
+                </td>
+                </tr>
+               <tr>
+                 <td style="font-size: 10px">
+                   Finance
+                </td>
+                 </tr>
+            </table>
+            <div style="float: right;padding-right: 8px;padding-top: 8px;">
+              <a href="{% url 'doclist' campus="bbi" department="finance" pagenumber=1 %}" class="btn-bbicustomview" role="button" >View</a>
+            </div>
+            </li>
+            <li class="nav-item" style="margin-top: 15px;">
+            <span class="span-custom-bbi" style="float: left;">HR</span>
+             <table style="margin-left: 8px; float: left;">
+               <tr>
+
+                 <td style="font-size: 14px">
+                   HR Forms
+
+                </td>
+                </tr>
+               <tr>
+                 <td style="font-size: 10px">
+                   HR
+                </td>
+                 </tr>
+            </table>
+            <div style="float: right;padding-right: 8px;padding-top: 8px;">
+              <a href="{% url 'doclist' campus="bbi" department="hr" pagenumber=1 %}" class="btn-bbicustomview" role="button" >View</a>
+            </div>
+            </li>
+
+           </ul>
+        </div>
+      </div>
+
+    </div>
+
+  <div class="content-section" style="margin-top: 16px;">
+    <div class="form-inline">
+
+        <img src="{% static 'home/img/document.png' %}" alt="" style="margin-top: 16px;">
+
+      <h5 style="margin-top: 25px;margin-left: 8px;font-size: 18px;">System logins</h5>
+    </div>
+      <div class="border border-custom">
+        <ul class="list-group">
+          <li class="list-group-item list-group-item-light" style="font-size: 14px;">Website
+            <div style="float: right;padding-right: 8px;">
+            <a href="http://www.wellingtonedu.com.au" target="_blank" class="btn-wegcustomlink" role="button" >WEG</a>
+            <a href="https://www.york.edu.au" target="_blank" class="btn-ybicustomlink" role="button" >YBI</a>
+            <a href="https://www.berkeley.edu.au" target="_blank" class="btn-bbicustomlink" role="button" >BBI</a>
+            </div>
+
+          </li>
+
+          <li class="list-group-item list-group-item-light" style="font-size: 14px;">RTO
+            <div style="float: right;padding-right: 8px;">
+            <a href="https://ybi.rtomanager.com.au/" target="_blank" class="btn-ybicustomlink" role="button" >YBI</a>
+            <a href="https://bbi.rtomanager.com.au/" target="_blank" class="btn-bbicustomlink" role="button" >BBI</a>
+            <a href="https://lerosey.rtomanager.com.au/" target="_blank" class="btn-wegcustomlink" role="button" >LRH</a>
+            <div>
+          </li>
+          <li class="list-group-item list-group-item-light" style="font-size: 14px;">Elearning
+            <div style="float: right;padding-right: 8px;">
+            <a href="https://elearning.york.edu.au/" target="_blank" class="btn-ybicustomlink" role="button" >YBI</a>
+            <a href="https://elearning.berkeley.nsw.edu.au/" target="_blank" class="btn-bbicustomlink" role="button" >BBI</a>
+            <a href="https://elearning.lerosey.edu.au/" target="_blank" class="btn-wegcustomlink" role="button" >LRH</a>
+            </div>
+          </li>
+          <li class="list-group-item list-group-item-light" style="font-size: 14px;">App
+            <div style="float: right;padding-right: 8px;">
+            <a href="{% url 'ybihome' %}"  class="btn-ybicustomlink" role="button" >YBI</a>
+            <a href="{% url 'bbihome' %}"  class="btn-bbicustomlink" role="button" >BBI</a>
+            </div>
+          </li>
+
+
+        </ul>
+     </div>
+  </div>
+  <div class="content-section" style="margin-top: 16px;">
+    <div class="form-inline">
+
+        <img src="{% static 'home/img/document.png' %}" alt="" style="margin-top: 16px;">
+
+      <h5 style="margin-top: 25px;margin-left: 8px;font-size: 18px;">Useful Links</h5>
+    </div>
+      <div class="border border-custom">
+        <ul class="list-group">
+
+          <li class="list-group-item list-group-item-light" style="font-size: 14px;">
+            <div >
+            <a href="https://prisms.education.gov.au/Logon/Logon.aspx" class="usefullink" target="_blank"  >The Provider Registration and International Student Management System (PRISMS) </a>
+
+            </div>
+          </li>
+          <li class="list-group-item list-group-item-light" style="font-size: 14px;">
+            <div >
+            <a href="https://www.homeaffairs.gov.au/" class="usefullink" target="_blank"  >Australian Government Department of Home Affairs</a>
+
+            </div>
+          </li>
+          <li class="list-group-item list-group-item-light" style="font-size: 14px;">
+            <div >
+            <a href="https://immi.homeaffairs.gov.au/visas/already-have-a-visa/check-visa-details-and-conditions/check-conditions-online" target="_blank" class="usefullink" >Visa Entitlement Verification Online (VEVO)</a>
+
+            </div>
+          </li>
+          <li class="list-group-item list-group-item-light" style="font-size: 14px;">
+            <div >
+            <a href="https://www.ato.gov.au/" target="_blank" class="usefullink" >The Australian Taxation Office (ATO)</a>
+
+            </div>
+          </li>
+        </ul>
+     </div>
+  </div>
+
+
+</div>
+
+  <div class="col-md-4">
+    <div class="form-inline">
+
+        <img src="{% static 'home/img/notice.png' %}" alt="" style="margin-top: 16px;">
+
+      <h5 style="margin-top: 25px;margin-left: 8px;font-size: 18px;">Notice Board</h5>
+    </div>
+    <div class="border border-custom" style="height: 1040px;overflow: auto;" >
+    <div class="form-row col-md-4" align = "Right">
+      <div class="well small" >
+          <form action=""  class="form-inline" role="search" method="get" >
+              <div class="form-row " >
+                {% with form=filterpost.form %}
+                  {% for field in form.visible_fields %}
+                  <div class="form-group ">
+
+                        {% render_field field class="form-control" style="width: 250px; height: 35px; margin-top: 15px; background: #F5F5F5;" %}
+                    <button type="submit" value="submit" style="background: #212B52;color: white;height: 33px;  margin-left: 2px;margin-top: 15px;width: 70px;border-radius: 5px;">Search</button>
+                  </div>
+
+                  {% endfor %}
+
+              </div>
+          {% endwith %}
+          </form>
+      </div>
+    </div>
+    <div style="margin-top: 15px; padding-left: 12px;padding-right: 12px;">
+      {% for post in current_page %}
+      <article class="media content-section" >
+
+            <div class="media-body" >
+              <div class="article-metadata" style="margin-top: 10px;">
+                <a class="mr-2 small" href="#"><span class="span-custom-post">{{ post.postuser|capfirst }}</span></a>
+                <a class="mr-2 small" href="#"><span class="span-custom-post">
+                  {% if post.department == "hr" or post.department == "it"  %}
+                  {{ post.department|upper }}
+                  {% else %}
+                  {{ post.department|capfirst }}
+                  {% endif %}
+                </span></a>
+                <div style="float: right;">
+                <!-- <small class="text-muted" style="font-size: 11px">{{ post.department|capfirst }}</small> -->
+
+                <small class="text-muted" style="font-size: 11px"><img src="{% static 'home/img/docdate.png' %}" style="width: 22px;">{{post.postdate|date:"d/M" }}</small>
+
+                </div>
+              </div>
+                {% if post.top  %}
+              <h6 style="margin-top: 8px;font-size:14px"><a class="articletitle-custom" href="{% url 'articledetail' id=post.id campus=post.campus department=post.department %}" >  <img src="{% static 'home/img/top.png' %}" alt="" style="float: left;width:30px;">{{ post.title }}</a></h6>
+              {% else %}
+              <h6 style="margin-top: 8px;font-size:14px"><a class="articletitle-custom" href="{% url 'articledetail' id=post.id campus=post.campus department=post.department %}" >{{ post.title }}</a></h6>
+              {% endif %}
+            </div>
+          </article>
+      {% endfor %}
+    </div>
+         {% if is_paginated %}
+                  <nav style="padding-left: 20px; padding-top:20px">
+                     <ul class="pagination small">
+                         {% if current_page.has_previous %}
+                             <li class="page-item"><a class="page-link" href="?page={{ current_page.previous_page_number }}">Previous</a></li>
+                         {% endif %}
+                         {% for l in  Items.paginator.page_range %}
+                             {% if l <= Items.number|add:5 and l >= Items.number|add:-5 %}
+                                 <li class="page-item {% if  l == current_page.number %}active{% endif %}">
+                                   <a class="page-link" href="?page={{forloop.counter}}">{{forloop.counter}}</a>
+                                 </li>
+                             {% endif %}
+                         {% endfor %}
+
+                         {% if current_page.has_next %}
+                             <li class="page-item"><a class="page-link" href="?page={{ current_page.next_page_number }}">Next</a></li>
+                         {% endif %}
+                     </ul>
+                 </nav>
+          {% endif %}
+        </div>
+
+  </div>
+  <div class="col-md-4">
+
+    <!-- <div class="box">
+    <article class="media">
+        <div class="media-left">
+            <figure class="image is-50x50">
+                <img src="http://openweathermap.org/img/w/{{ weather.icon }}.png" alt="Image">
+            </figure>
+        </div>
+        <div class="media-content">
+            <div class="content">
+                <p>
+                    <span class="title">{{ weather.city }}</span>
+                    <br>
+                    <span class="subtitle">{{ weather.temperature }}° C   {{ weather.description }}</span>
+                    <br>
+                </p>
+            </div>
+        </div>
+    </article>
+    </div> -->
+    <div class="form-inline">
+
+        <img src="{% static 'home/img/calendar.png' %}" alt="" style="margin-top: 16px;">
+
+      <h5 style="margin-top: 25px;margin-left: 8px;font-size: 18px;">Calendar</h5>
+    </div>
+    <div class="box small">
+      <!-- <script language="javascript">
+          calendar();
+          // startclock();
+      </script> -->
+      <div id="myCalendar" class="vanilla-calendar"></div>
+    </div>
+
+  
+      <div class="border border-custom" style="height: 280px;margin-top: 30px;">
+
+        <ul class="nav nav-tabs">
+
+          <li class="nav-item">
+            <a class="nav-link nav-custom " data-toggle="tab" href="#c2020">2020</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link nav-custom active" data-toggle="tab" href="#c2021">2021</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link nav-custom" data-toggle="tab" href="#c2022">2022</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link nav-custom" href="https://www.berkeley.edu.au/pre-enrolment/important-dates/">Find More..</a>
+          </li>
+          </ul>
+
+          <!-- Tab panes -->
+          <div class="tab-content" >
+            <div id="c2020" class="container tab-pane fade small"><br>
+              <table class="table small">
+                  <thead>
+                      <tr>
+                          <th>Term</th>
+
+                          <th>Date</th>
+
+                          <th>Intake Date</th>
+
+                      </tr>
+                  </thead>
+                  <tbody>
+                    {% for item in calendardates.calendardates2020filter %}
+                    {% if item.term ==  term  %}
+                      <tr >
+                        <td>
+                            {{ item.term }}
+                        </td>
+                        <td>
+                            {{ item.startdate|date:"d F" }}-{{ item.finishdate|date:"d F" }}
+                        </td>
+
+                          <td>
+                             {{ item.intakedate|date:"d F"}}
+                          </td>
+                      </tr>
+                        {% else %}
+                        <tr >
+                          <td>
+                              {{ item.term }}
+                          </td>
+                          <td>
+                              {{ item.startdate|date:"d F" }}-{{ item.finishdate|date:"d F" }}
+                          </td>
+
+                            <td>
+                               {{ item.intakedate|date:"d F"}}
+                            </td>
+                        </tr>
+                        {% endif %}
+                      {% endfor %}
+                  </tbody>
+              </table>
+              </div>
+
+                <div id="c2021" class="container tab-pane active  small"><br>
+                  <table class="table small">
+                      <thead>
+                          <tr>
+                              <th>Term</th>
+
+                              <th>Date</th>
+
+                              <th>Intake Date</th>
+
+                          </tr>
+                      </thead>
+                      <tbody>
+                        {% for item in calendardates.calendardates2021filter %}
+                        {% if item.term ==  term  %}
+                          <tr style="background: #C49A6C;color: white;">
+                            <td>
+                                {{ item.term }}
+                            </td>
+                            <td>
+                                {{ item.startdate|date:"d F" }}-{{ item.finishdate|date:"d F" }}
+                            </td>
+
+                              <td>
+                                 {{ item.intakedate|date:"d F"}}
+                              </td>
+                          </tr>
+                            {% else %}
+                            <tr >
+                              <td>
+                                  {{ item.term }}
+                              </td>
+                              <td>
+                                  {{ item.startdate|date:"d F" }}-{{ item.finishdate|date:"d F" }}
+                              </td>
+
+                                <td>
+                                   {{ item.intakedate|date:"d F"}}
+                                </td>
+                            </tr>
+                                {% endif %}
+                          {% endfor %}
+                      </tbody>
+                  </table>
+                  </div>
+                <div id="c2022" class="container tab-pane fade small"><br>
+                  <table class="table small">
+                      <thead>
+                          <tr>
+                              <th>Term</th>
+
+                              <th>Date</th>
+
+                              <th>Intake Date</th>
+
+                          </tr>
+                      </thead>
+                      <tbody>
+                        {% for item in calendardates.calendardates2022filter %}
+
+                            <tr >
+                              <td>
+                                  {{ item.term }}
+                              </td>
+                              <td>
+                                  {{ item.startdate|date:"d F" }}-{{ item.finishdate|date:"d F" }}
+                              </td>
+
+                                <td>
+                                   {{ item.intakedate|date:"d F"}}
+                                </td>
+                            </tr>
+
+                          {% endfor %}
+                      </tbody>
+                  </table>
+                  </div>
+          </div>
+
+        </div>
+
+
+    <!-- <script>
+     // $(".calendar li").click(function(){
+     //   var calendarNum = $(this).index();
+     //
+     //   sessionStorage.setItem("calendarNum",calendarNum);
+     //
+     //
+     //
+     // });
+     // $(function(){
+     //   var getcalendarNum = sessionStorage.getItem("calendarNum");
+     //   $(".calendar a").removeClass("active");
+     //
+     //   $(".calendar a").eq(getcalendarNum).addClass("active");
+
+
+
+
+     })
+    </script> -->
+
+
+  </div>
+</div>
+<script>
+    let pastDates = true, availableDates = false, availableWeekDays = false
+
+    let calendar = new VanillaCalendar({
+        selector: "#myCalendar",
+        // months: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"],
+        // shortWeekday: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
+        onSelect: (data, elem) => {
+            console.log(data, elem)
+        }
+    })
+
+    // let btnPastDates = document.querySelector('[name=pastDates]')
+    // btnPastDates.addEventListener('click', () => {
+    //     pastDates = !pastDates
+    //     calendar.set({pastDates: pastDates})
+    //     btnPastDates.innerText = `${(pastDates ? 'Disable' : 'Enable')} past dates`
+    // })
+    //
+    // let btnAvailableDates = document.querySelector('[name=availableDates]')
+    // btnAvailableDates.addEventListener('click', () => {
+    //     availableDates = !availableDates
+    //     btnAvailableDates.innerText = `${(availableDates ? 'Clear available dates' : 'Set available dates')}`
+    //     if (!availableDates) {
+    //         calendar.set({availableDates: [], datesFilter: false})
+    //         return
+    //     }
+    //     let dates = () => {
+    //         let result = []
+    //         for (let i = 1; i < 15; ++i) {
+    //             if (i % 2) continue
+    //             let date = new Date(new Date().getTime() + (60 * 60 * 24 * 1000) * i)
+    //             result.push({date: `${String(date.getFullYear())}-${String(date.getMonth() + 1).padStart(2, 0)}-${String(date.getDate()).padStart(2, 0)}`})
+    //         }
+    //         return result
+    //     }
+    //     calendar.set({availableDates: dates(), availableWeekDays: [], datesFilter: true})
+    // })
+    //
+    // let btnAvailableWeekDays = document.querySelector('[name=availableWeekDays]')
+    // btnAvailableWeekDays.addEventListener('click', () => {
+    //     availableWeekDays = !availableWeekDays
+    //     btnAvailableWeekDays.innerText = `${(availableWeekDays ? 'Clear available weekdays' : 'Set available weekdays')}`
+    //     if (!availableWeekDays) {
+    //         calendar.set({availableWeekDays: [], datesFilter: false})
+    //         return
+    //     }
+    //     let days = [{
+    //         day: 'monday'
+    //     }, {
+    //         day: 'tuesday'
+    //     }, {
+    //         day: 'wednesday'
+    //     }, {
+    //         day: 'friday'
+    //     }]
+    //     calendar.set({availableWeekDays: days, availableDates: [], datesFilter: true})
+    // })
+</script>
+{% endblock content %}

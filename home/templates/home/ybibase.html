@@ -1,0 +1,266 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  {% block script %}
+
+  {% endblock %}
+  <link rel="stylesheet" type="text/css" href="{% static 'ybi/ybimain.css' %}">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="shortcut icon" href="{% static 'home/img/icon.png' %}">
+  <script>
+    $(document).on('click', '.confirm-delete', function(){
+      return confirm('Are you sure you want to delete?');
+  })
+  </script>
+  {% if title %}
+  <title>Wellington Education Intranet{{ title }}</title>
+  {% else %}
+  <title>Wellington Education Intranet</title>
+  {% endif %}
+</head>
+
+<body class="wrapper" >
+  <header class="site-header">
+    <nav class="navbar navbar-expand-md navbar-custom fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="{% url 'homeredirect' %}">
+          <img src="{% static 'ybi/img/logo.png' %}" alt="">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarToggle">
+          <div class="navbar-nav mr-auto">
+            <a class="nav-item nav-link" href="{% url 'homeredirect' %}"><img src="{% static 'home/img/homesign.png' %}" alt=""> &nbsp;&nbsp;Home</a>
+            {% if user.is_authenticated %}
+            {% if perms.auth.ybi_menu_compliance %}
+          <ul class="nav navbar-nav">
+
+            <li class="dropdown">
+              <a class="dropdown-toggle nav-item nav-link" data-toggle="dropdown" href="#">Compliance
+              <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                {% if perms.auth.ybi_menu_compliance_noticemgt %}
+                <li><a class="dropdown-item" href="{% url 'articlemgt' campus="ybi" department="compliance" pagenumber=1 %}">Notice Mgt</a></li>
+
+                <div class="dropdown-divider"></div>
+                {% endif %}
+                {% if perms.auth.ybi_menu_compliance_documentmgt %}
+                <li><a class="dropdown-item" href="{% url 'docupload' campus="ybi" department="compliance" %}">Document Mgt</a></li>
+                {% endif %}
+              </ul>
+            </li>
+          </ul>
+          {% endif %}
+              {% if perms.auth.ybi_menu_academic %}
+            <ul class="nav navbar-nav">
+
+              <li class="dropdown">
+                <a class="dropdown-toggle nav-item nav-link" data-toggle="dropdown" href="#">Academic
+                <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  {% if perms.auth.ybi_menu_academic_noticemgt %}
+                  <li><a class="dropdown-item" href="{% url 'articlemgt' campus="ybi" department="academic" pagenumber=1 %}">Notice Mgt</a></li>
+
+                  <div class="dropdown-divider"></div>
+                  {% endif %}
+                  {% if perms.auth.ybi_menu_academic_documentmgt %}
+                  <li><a class="dropdown-item" href="{% url 'docupload' campus="ybi" department="academic" %}">Document Mgt</a></li>
+                  {% endif %}
+                </ul>
+              </li>
+            </ul>
+            {% endif %}
+            {% if perms.auth.ybi_menu_admin %}
+            <ul class="nav navbar-nav">
+
+              <li class="dropdown">
+                <a class="dropdown-toggle nav-item nav-link" data-toggle="dropdown" href="#">Admin
+                <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  {% if perms.auth.ybi_menu_admin_noticemgt %}
+                  <li><a class="dropdown-item" href="{% url 'articlemgt' campus="ybi" department="admin" pagenumber=1 %}">Notice Mgt</a></li>
+                  <div class="dropdown-divider"></div>
+                    {% endif %}
+                  {% if perms.auth.ybi_menu_admin_documentmgt %}
+                  <li><a class="dropdown-item" href="{% url 'docupload' campus="ybi" department="admin" %}">Document Mgt</a></li>
+                  <div class="dropdown-divider"></div>
+                  {% endif %}
+                </ul>
+              </li>
+            </ul>
+              {% endif %}
+            {% if perms.auth.ybi_menu_marketing %}
+            <ul class="nav navbar-nav">
+
+              <li class="dropdown">
+                <a class="dropdown-toggle nav-item nav-link" data-toggle="dropdown" href="#">Marketing
+                <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    {% if perms.auth.ybi_menu_marketing_noticemgt %}
+                  <li><a class="dropdown-item" href="{% url 'articlemgt' campus="ybi" department="marketing" pagenumber=1 %}">Notice Mgt</a></li>
+                  <div class="dropdown-divider"></div>
+                    {% endif %}
+                    {% if perms.auth.ybi_menu_marketing_documentmgt %}
+                  <li><a class="dropdown-item" href="{% url 'docupload' campus="ybi" department="marketing" %}">Document Mgt</a></li>
+                  {% endif %}
+                </ul>
+              </li>
+            </ul>
+            {% endif %}
+            {% if perms.auth.ybi_menu_finance %}
+            <ul class="nav navbar-nav">
+
+              <li class="dropdown">
+                <a class="dropdown-toggle nav-item nav-link" data-toggle="dropdown" href="#">Finance
+                <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  {% if perms.auth.ybi_menu_finance_noticemgt %}
+                  <li><a class="dropdown-item" href="{% url 'articlemgt' campus="ybi" department="finance" pagenumber=1 %}">Notice Mgt</a></li>
+                  <div class="dropdown-divider"></div>
+                  {% endif %}
+                  {% if perms.auth.ybi_menu_finance_documentmgt %}
+                  <li><a class="dropdown-item" href="{% url 'docupload' campus="ybi" department="finance" %}">Document Mgt</a></li>
+                  {% endif %}
+                </ul>
+              </li>
+            </ul>
+              {% endif %}
+              {% if perms.auth.ybi_menu_hr %}
+            <ul class="nav navbar-nav">
+
+              <li class="dropdown">
+                <a class="dropdown-toggle nav-item nav-link" data-toggle="dropdown" href="#">HR
+                <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  {% if perms.auth.ybi_menu_hr_noticemgt %}
+                  <li><a class="dropdown-item" href="{% url 'articlemgt' campus="ybi" department="hr" pagenumber=1 %}">Notice Mgt</a></li>
+                  <div class="dropdown-divider"></div>
+                    {% endif %}
+                    {% if perms.auth.ybi_menu_hr_documentmgt %}
+                  <li><a class="dropdown-item" href="{% url 'docupload' campus="ybi" department="hr" %}">Document Mgt</a></li>
+                    {% endif %}
+                </ul>
+              </li>
+            </ul>
+            {% endif %}
+            {% if perms.auth.ybi_menu_it %}
+              <ul class="nav navbar-nav">
+
+                <li class="dropdown">
+                  <a class="dropdown-toggle nav-item nav-link" data-toggle="dropdown" href="#">IT
+                  <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                      {% if perms.auth.ybi_menu_it_noticemgt %}
+                    <li><a class="dropdown-item" href="{% url 'articlemgt' campus="ybi" department="it" pagenumber=1 %}">Notice Mgt</a></li>
+                    <div class="dropdown-divider"></div>
+                      {% endif %}
+                      {% if perms.auth.ybi_menu_it_documentmgt %}
+                    <li><a class="dropdown-item" href="{% url 'docupload' campus="ybi" department="it" %}">Document Mgt</a></li>
+                      {% endif %}
+                  </ul>
+                </li>
+              </ul>
+              {% endif %}
+
+            {% endif %}
+          </div>
+
+
+          <!-- Navbar Right Side -->
+          <div class="navbar-nav">
+            {% if user.is_authenticated %}
+              {% if perms.auth.ybi_menu_elearning %}
+            <ul class="nav navbar-nav">
+
+              <li class="dropdown">
+                <a class="dropdown-toggle nav-item nav-link" data-toggle="dropdown" href="#">Elearning
+                <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item"href="{% url 'ybiusersuspend' %}">User Suspend</a></li>
+                  <li><a class="dropdown-item"href="{% url 'ybiuserpriority' %}">User Priority</a></li>
+                  <li><a class="dropdown-item" href="{% url 'ybiuserbulkcreate' %}">User Upload</a></li>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="{% url 'Course' %}">Course</a>
+                  <div class="dropdown-divider"></div>
+                  <li><a class="dropdown-item" href="{% url 'enrolluser' %}">Active/Suspend User in Course</a></li>
+                  <li><a class="dropdown-item" href="{% url 'bulksuspendusers' %}">Bulk Suspend User in Course</a></li>
+                  <div class="dropdown-divider"></div>
+                  <li><a class="dropdown-item" href="{% url 'ybibbbrecordview' %}">View archived Recordings</a></li>
+                  <li><a class="dropdown-item" href="{% url 'ybiBBBdeleterecord' %}">Delete Online Recordings</a></li>
+                  <div class="dropdown-divider"></div>
+                  <li><a class="dropdown-item" href="{% url 'sync' %}">Sync</a></li>
+
+                </ul>
+              </li>
+
+            </ul>
+              {% endif %}
+              <ul class="nav navbar-nav">
+
+                <li class="dropdown">
+                  <a class="dropdown-toggle nav-item nav-link" data-toggle="dropdown" href="#">{{ user.get_short_name }}
+                  <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="{% url 'logout' %}">logout</a></li>
+
+                  </ul>
+                </li>
+
+              </ul>
+
+            {% else %}
+
+              <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
+
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main role="main" class="container" >
+    <div class="row">
+
+      <div class="col-md-12">
+        {% block content %}
+
+        {% endblock %}
+
+      </div>
+
+    </div>
+
+
+  </main>
+
+
+  <!-- Footer -->
+  <footer  id = "footer" class="page-footer fixed-bottom">
+
+    <!-- Copyright -->
+    <div class="text-center">
+   <p>© 2020 Copyright: Wellington Education Group &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;it@wellingtonedu.com.au</p>
+
+    </div>
+    <!-- Copyright -->
+
+  </footer>
+<!-- Footer -->
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+</body>
+
+</html>

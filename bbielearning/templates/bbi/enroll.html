@@ -1,0 +1,33 @@
+{% extends 'home/bbibase.html' %}
+
+
+{% load render_table from django_tables2 %}
+{% block content %}
+
+<div class="row">
+  <div class="col-md-8">
+    <form method="get" action="search/">
+      {% csrf_token %}
+      <input type="search" placeholder="ourseid" name="q" required>
+      <button type="submit">search</button>
+    </form>
+  {% render_table table %}
+  </div>
+  <div class="col-md-4">
+    <div class="content-section">
+      <h4>Opeation</h4>
+      <p class='text-muted'>please be careful click these links before you know what you would like to do
+        <ul class="list-group">
+          <li class="list-group-item list-group-item-light"><a href="{% url 'YbiSaveenrolleduser' %}">Transfer Enrolledusers</a></li>
+          <li class="list-group-item list-group-item-light"><a href="{% url 'YbiUpdateusersuspended' %}">Suspended Users</a></li>
+
+        </ul>
+      </p>
+    </div>
+  </div>
+</div>
+
+
+
+
+{% endblock content %}

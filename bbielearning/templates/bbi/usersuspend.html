@@ -1,0 +1,119 @@
+{% extends 'home/bbibase.html' %}
+{% load widget_tweaks %}
+{% load tags_extras %}
+
+
+{% load render_table from django_tables2 %}
+
+
+{% block script %}
+<script >
+  $(document).ready(function(){
+
+
+    $("#suspendbtn").click(function(){
+
+      var checkboxValues = [];
+      $('input[name="selected"]:checked').each(function(index, elem) {
+          checkboxValues.push($(elem).val());
+      });
+      //alert(checkboxValues.join(', '));
+      $("#selectedcheckbox").val(checkboxValues);
+
+      if ($.trim(checkboxValues).length==0)
+      {
+        alert("please select users!");
+        return false;
+      }
+
+
+     });
+
+     $("#activebtn").click(function(){
+
+       var checkboxValues = [];
+       $('input[name="selected"]:checked').each(function(index, elem) {
+           checkboxValues.push($(elem).val());
+       });
+       //alert(checkboxValues.join(', '));
+       $("#selectedcheckbox").val(checkboxValues);
+
+       if ($.trim(checkboxValues).length==0)
+       {
+         alert("please select users!");
+         return false;
+       }
+
+
+      });
+
+
+
+  });
+
+</script>
+
+<script>
+  $(document).ready(function(){
+
+
+  $("#all").click(function(){
+
+    if (this.checked)
+    {
+      $("input[name='selected']").each(function(i,n){
+                   n.checked = true;
+             });
+    }
+    else {
+      $("input[name='selected']").each(function(i,n){
+                   n.checked = false;
+             });
+    }
+
+ 	});
+
+  });
+</script>
+
+{% endblock %}
+
+
+
+{% block content %}
+<div class="well">
+<form action=""  role="search" method="get">
+    <div class="form-row col-md-12">
+      {% with form=filter.form %}
+        {% for field in form.visible_fields %}
+        <div class="form-group col-md-12">
+          {{ field.label_tag }}
+              {% render_field field class="form-control" %}
+        </div>
+        {% endfor %}
+       <div class="form-row ">
+       <span class="input-group-btn form-inline mb-3">
+            <input type="text" name="selectedcheckbox" id="selectedcheckbox" style="display: none"/>
+            <button class="btn btn-info form-control ml-1" id="Search" name="Search" type="submit" value="Search">Search</button>
+            <button class="btn btn-info form-control ml-3" id="suspendbtn" name="suspendbtn" type="submit" value="suspendbtn">Suspend</button>
+            <button class="btn btn-info form-control ml-3" id="activebtn" name="activebtn" type="submit" value="activebtn">Active</button>
+        </span>
+       </div>
+
+    </div>
+{% endwith %}
+</form>
+</div>
+<div align = "Right">
+<h6>Number of records: {{ filter.qs | length }}</h6>
+</div>
+<div class="row">
+  <div class="col-md-12">
+  {% render_table table %}
+  </div>
+
+  </div>
+</div>
+
+
+{% endblock content %}

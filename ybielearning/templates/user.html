@@ -1,0 +1,38 @@
+{% extends 'home/ybibase.html' %}
+{% load widget_tweaks %}
+{% load tags_extras %}
+
+
+{% load render_table from django_tables2 %}
+{% block content %}
+<div class="well">
+<form action=""  class="form-inline" role="search" method="get">
+    <div class="form-row col-md-12">
+      {% with form=filter.form %}
+        {% for field in form.visible_fields %}
+        <div class="form-group col-md-4">
+          {{ field.label_tag }}
+              {% render_field field class="form-control" %}
+        </div>
+        {% endfor %}
+
+       <span class="input-group-btn">
+            <button class="btn btn-info form-control" type="submit" value="submit">Search</button>
+        </span>
+    </div>
+{% endwith %}
+</form>
+</div>
+<div align = "Right">
+<h6>Number of records: {{ filter.qs | length }}</h6>
+</div>
+<div class="row">
+  <div class="col-md-12">
+  {% render_table table %}
+  </div>
+
+  </div>
+</div>
+
+
+{% endblock content %}

@@ -1,0 +1,245 @@
+{% extends "home/ybibase.html" %}
+
+{% load widget_tweaks %}
+{% load tags_extras %}
+{% load timetags %}
+{% now "U" %}
+
+
+{% block script %}
+<script >
+    $(document).ready(function(){
+
+           //  get urlParam
+            $.urlParam = function (name) {
+                var results = new RegExp('[\?&]' + name + '=([^&#]*)')
+                                  .exec(window.location.search);
+
+                return (results !== null) ? results[1] || 0 : false;
+            };
+
+            categoryid=$.urlParam('categoryselect');
+            selectIndexid=$.urlParam('selectedIndex');
+            courseid=$.urlParam('course_id');
+            user=$.urlParam('user');
+            studentid=decodeURIComponent(user);
+
+            var $categoryvar=$("#categoryselect");
+            var $coursevar = $("#courseselect");
+            $options=$coursevar.find('option');
+
+            if (categoryid > 0 )
+            {
+                $("#categoryselect").val(categoryid);
+             };
+
+
+            $categoryvar.on('change',function()
+            {
+
+               $coursevar.html($options.filter('[value="'+this.value+'"]'));
+               var course=$("#courseselect").find("option:selected").text();
+               var array = course.split(".");
+
+               $("#course_id").val(array[0]);
+
+               selectIndex = document.getElementById("courseselect").selectedIndex;
+               $("#selectedIndex").val(selectIndex);
+
+            }).trigger('change');
+
+
+            if(selectIndexid >= 0)
+            {
+              document.getElementById("courseselect").options[selectIndexid].selected = true;
+              $("#selectedIndex").val(selectIndexid);
+            };
+
+            if (courseid > 0)
+            {
+              $("#course_id").val(courseid);
+            };
+
+
+
+    });
+</script>
+
+<script >
+    $(document).ready(function(){
+        $("#courseselect").change(function(){
+            var course=$("#courseselect").find("option:selected").text();
+            var array = course.split(".");
+
+            $("#course_id").val(array[0]);
+
+            selectIndex = document.getElementById("courseselect").selectedIndex;
+            $("#selectedIndex").val(selectIndex);
+
+        })});
+</script>
+
+<script >
+  $(document).ready(function(){
+
+
+    $("#delete").click(function(){
+      var checkboxValues = [];
+      $('input[name="checkbox"]:checked').each(function(index, elem) {
+          checkboxValues.push($(elem).val());
+      });
+      //alert(checkboxValues.join(', '));
+      $("#selectedcheckbox").val(checkboxValues);
+
+      if ($.trim(checkboxValues).length==0)
+      {
+        alert("please select users!");
+        return false;
+      }
+
+
+     });
+
+
+
+
+
+  });
+
+</script>
+<script >
+  $(document).ready(function(){
+
+
+  $("#all").click(function(){
+
+    if (this.checked)
+    {
+      $("input[name='checkbox']").each(function(i,n){
+                   n.checked = true;
+             });
+    }
+    else {
+      $("input[name='checkbox']").each(function(i,n){
+                   n.checked = false;
+             });
+    }
+
+ 	});
+
+  });
+</script>
+{% endblock %}
+
+
+
+{% block content %}
+
+<div id="header-search-box">
+
+    <form role="search"  method="get" id="searchform" action="{% url 'ybiBBBdeleterecord' %}">
+      {% csrf_token %}
+      <div class="form-group">
+        <label >Category:</label>
+        <select class="custom-select" name="categoryselect" id="categoryselect">
+          <option  select="true"> -- select category</option>
+          {% for item in categorydata %}
+          <option value="{{item.categoryid}}">{{item.categoryname}}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="form-group">
+        <label >Course:</label>
+        <select class="custom-select" name="courseselect" id="courseselect">
+          <option  select="true"> -- selcect Course</option>
+          {% for item in coursedata %}
+          <option value="{{item.categoryid}}">{{item.courseid}}.{{item.coursename}}</option>
+          {% endfor %}
+        </select>
+    </div>
+
+      <input type="text" name="course_id" id="course_id" style="display: none"/>
+      <input type="text" name="selectedIndex" id="selectedIndex" style="display: none"/>
+      <input type="text" name="selectedcheckbox" id="selectedcheckbox" style="display: none"/>
+      <span class="input-group-btn">
+          <button class="btn btn-info " name = "search" type="submit" value="search">Search
+          </button>
+          <button class="btn btn-info" name = "delete" id = "delete" type="submit" value="delete"  >Delete
+          </button>
+
+       </span>
+
+    </form>
+    <div align = "Right">
+      <h6>Number of records: {{ filter | length }}</h6>
+    </div>
+         {% if is_paginated %}
+         <table class="table table-striped">
+             <thead>
+                 <tr>
+                     <th><input type="checkbox" id="all" value="all">  </th>
+                     <th>Category </th>
+                     <th>name </th>
+                     <th>starttime</th>
+                     <th>endtime</th>
+                     <th>Status</th>
+
+                 </tr>
+             </thead>
+             <tbody>
+               {% for enrollitem in page_obj %}
+                 <tr>
+                    <td>
+                      <input type="checkbox" name="checkbox" id="checkbox" value="{{ enrollitem.id }}">
+                    </td>
+                    <td>
+                      {{ enrollitem.categoryname }}
+                    </td>
+                     <td>
+                       {{ enrollitem.name }}
+                     </td>
+                     <td>
+                       {{ enrollitem.starttime|print_timestamp }}
+                     </td>
+                     <td>
+                       {{ enrollitem.endtime|print_timestamp }}
+                     </td>
+                     <td>
+                       {{ enrollitem.state }}
+                     </td>
+                   </tr>
+                {% endfor %}
+
+             </tbody>
+         </table>
+         {% else %}
+         <p>There are no records yet.</p>
+         {% endif %}
+
+         {% if is_paginated %}
+              <ul class="pagination">
+         {% if page_obj.has_previous %}
+                  <li class="page-item"><a class="page-link" href="?{% param_replace page=page_obj.previous_page_number %}">&laquo;</a></li>
+         {% else %}
+                  <li class="page-item disabled"><span class="page-link">&laquo;</span></li>
+         {% endif %}
+
+                  {% for i in paginator.page_range %}
+                  {% if page_obj.number == i %}
+                  <li class="page-item active"><span class="page-link"> {{ i }} <span class="sr-only">(current)</span></span></li>
+         {% else %}
+                        <li class="page-item"><a class="page-link" href="?{% param_replace page=i %}">{{ i }}</a></li>
+         {% endif %}
+                  {% endfor %}
+
+                  {% if page_obj.has_next %}
+                  <li class="page-item"><a class="page-link" href="?{% param_replace page=page_obj.next_page_number %}">&raquo;</a></li>
+         {% else %}
+                  <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
+         {% endif %}
+              </ul>
+         {% endif %}
+  </div>
+
+
+{% endblock %}
